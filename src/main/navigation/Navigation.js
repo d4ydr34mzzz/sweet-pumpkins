@@ -7,7 +7,8 @@ class Navigation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            genre: "Action",
+            genre: 'Fantasy',
+            genres: [],
             year: {
                 label: "year",
                 min: 1990,
@@ -34,6 +35,14 @@ class Navigation extends React.Component {
         this.onSliderChange = this.onSliderChange.bind(this);
     }
 
+    componentDidMount() {
+        const genresURL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
+        fetch(genresURL)
+            .then(response => response.json())
+            .then(data => this.setState({genres: data.genres}))
+            .catch(error => console.log(error));
+    }
+
     onGenreChange(event) {
         this.setState({genre: event.target.value});
     }
@@ -50,7 +59,7 @@ class Navigation extends React.Component {
     render() {
         return(
             <section className="navigation">
-                <Selection genre={this.state.genre} onGenreChange={this.onGenreChange} />  
+                <Selection genre={this.state.genre} genres={this.state.genres} onGenreChange={this.onGenreChange} />  
                 <Slider data={this.state.year} onSliderChange={this.onSliderChange} />
                 <Slider data={this.state.rating} onSliderChange={this.onSliderChange} />
                 <Slider data={this.state.runtime} onSliderChange={this.onSliderChange} />
