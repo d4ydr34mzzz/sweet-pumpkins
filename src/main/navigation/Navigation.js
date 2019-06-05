@@ -43,8 +43,8 @@ class Navigation extends React.Component {
             .catch(error => console.log(error));
     }
 
-    onGenreChange(event) {
-        this.setState({genre: event.target.value});
+    onGenreChange(data) {
+        this.setState({genre: data});
     }
     
     onSliderChange(data) {
