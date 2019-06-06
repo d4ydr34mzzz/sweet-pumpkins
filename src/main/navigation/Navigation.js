@@ -4,7 +4,7 @@ import Selection from "./Selection";
 import Slider from "./Slider";
 
 class Navigation extends React.Component {
-    constructor(props) {
+    /* constructor(props) {
         super(props);
         this.state = {
             genre: 'Fantasy',
@@ -33,17 +33,17 @@ class Navigation extends React.Component {
         };
         this.onGenreChange = this.onGenreChange.bind(this);
         this.onSliderChange = this.onSliderChange.bind(this);
-    }
+    } */
 
     componentDidMount() {
         const genresURL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
         fetch(genresURL)
             .then(response => response.json())
-            .then(data => this.setState({genres: data.genres}))
+            .then(data => this.props.setGenres(data.genres))
             .catch(error => console.log(error));
     }
 
-    onGenreChange(data) {
+    /* onGenreChange(data) {
         this.setState({genre: data});
     }
     
@@ -54,15 +54,15 @@ class Navigation extends React.Component {
                 value: data.value
             }
         });
-    }
+    } */
 
     render() {
         return(
             <section className="navigation">
-                <Selection genre={this.state.genre} genres={this.state.genres} onGenreChange={this.onGenreChange} />  
-                <Slider data={this.state.year} onSliderChange={this.onSliderChange} />
-                <Slider data={this.state.rating} onSliderChange={this.onSliderChange} />
-                <Slider data={this.state.runtime} onSliderChange={this.onSliderChange} />
+                <Selection genre={this.props.genre} genres={this.props.genres} onGenreChange={this.props.onGenreChange} />  
+                <Slider data={this.props.year} onSliderChange={this.props.onSliderChange} />
+                <Slider data={this.props.rating} onSliderChange={this.props.onSliderChange} />
+                <Slider data={this.props.runtime} onSliderChange={this.props.onSliderChange} />
             </section>
         );
     }
