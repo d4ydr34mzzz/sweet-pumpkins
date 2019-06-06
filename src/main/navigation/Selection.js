@@ -20,9 +20,7 @@ class Selection extends React.Component {
                         this.props.genres.map((genre) =>
                             <option key={genre.id} value={genre.name}>{genre.name}</option>
                         )
-                    }
-                    <option value="comedy">Comedy</option>
-                    <option value="action">Action</option>        
+                    }       
                 </select>
             </div>
         );
