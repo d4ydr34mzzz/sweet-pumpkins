@@ -6,14 +6,16 @@ class Movies extends React.Component {
     constructor(props) {
         super(props);
         this.storeMovies = this.storeMovies.bind(this);
+        this.fetchMovies = this.fetchMovies.bind(this);
         this.state = {
             movies: []
         };
     }
     
     componentDidMount() {
-        const apiURL = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
-        
+        // const apiURL = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+        const apiURL = this.props.url;
+
         // fetch(apiURL)
         //     .then(function(response) {
         //         return Promise.resolve(response)
@@ -24,14 +26,22 @@ class Movies extends React.Component {
         //     .catch(function(error) {
         //         console.log('Request failed', error)
         //     });
+        this.fetchMovies(apiURL);
+    }
 
-        fetch(apiURL)
+    componentWillReceiveProps(nextProps) {
+        if (this.props.url !== nextProps.url) {
+            this.fetchMovies(nextProps.url);
+        }
+    }
+
+    fetchMovies(url) {
+        fetch(url)
             .then(response => response.json())
             .then(data => this.storeMovies(data))
             .catch(error => console.log(error))
-        
     }
-    
+
     storeMovies(data) {
         const movies = data.results.map(result => {
             const {vote_count, id, genre_ids, poster_path, title, vote_average, release_date} = result;

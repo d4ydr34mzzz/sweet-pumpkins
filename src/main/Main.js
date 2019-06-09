@@ -24,16 +24,19 @@ class Main extends React.Component {
                 value: { min: 8, max: 10 }
             },
             runtime: {
-            label: "runtime",
-            min: 0,
-            max: 300,
-            step: 15,
-            value: { min: 60, max: 120 }
-            }
+                label: "runtime",
+                min: 0,
+                max: 300,
+                step: 15,
+                value: { min: 60, max: 120 }
+            },
+            moviesURL: `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
         };
         this.onGenreChange = this.onGenreChange.bind(this);
         this.onSliderChange = this.onSliderChange.bind(this);
         this.setGenres = this.setGenres.bind(this);
+        this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
+        this.generateURL = this.generateURL.bind(this);
     }
     
     onGenreChange(data) {
@@ -53,11 +56,36 @@ class Main extends React.Component {
         this.setState({genres});
     }
 
+    generateURL() {
+        const {genres, year, rating, runtime} = this.state;
+        const selectedGenre = genres.find((genre) => { 
+            return genre.name === this.state.genre;
+        });
+        const genreID = selectedGenre.id;
+        
+        const moviesURL = `https://api.themoviedb.org/3/discover/movie?` + 
+                          `api_key=${process.env.REACT_APP_TMDB_API_KEY}&` +
+                          `language=en-US&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13` +
+                          `primary_release_date.gte=${year.value.min}-01-01&` +
+                          `primary_release_date.lte=${year.value.max}-12-31&` +
+                          `vote_average.gte=${rating.value.min}&` + 
+                          `vote_average.lte=${rating.value.max}&` +
+                          `with_genres=${genreID}&` +
+                          `with_runtime.gte=${runtime.value.min}&` +
+                          `with_runtime.lte=${runtime.value.max}&`;
+
+        this.setState({moviesURL});
+    }
+
+    onSearchButtonClick() {
+        this.generateURL();
+    }
+
     render() {
         return(
             <section className="main">
-                <Navigation onGenreChange={this.onGenreChange} onSliderChange={this.onSliderChange} setGenres={this.setGenres} {...this.state} />
-                <Movies />
+                <Navigation onGenreChange={this.onGenreChange} onSliderChange={this.onSliderChange} setGenres={this.setGenres} onSearchButtonClick={this.onSearchButtonClick} {...this.state} />
+                <Movies url={this.state.moviesURL} />
             </section>
         );
     }
