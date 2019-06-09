@@ -65,7 +65,7 @@ class Main extends React.Component {
         
         const moviesURL = `https://api.themoviedb.org/3/discover/movie?` + 
                           `api_key=${process.env.REACT_APP_TMDB_API_KEY}&` +
-                          `language=en-US&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13` +
+                          `language=en-US&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&` +
                           `primary_release_date.gte=${year.value.min}-01-01&` +
                           `primary_release_date.lte=${year.value.max}-12-31&` +
                           `vote_average.gte=${rating.value.min}&` + 
@@ -73,7 +73,7 @@ class Main extends React.Component {
                           `with_genres=${genreID}&` +
                           `with_runtime.gte=${runtime.value.min}&` +
                           `with_runtime.lte=${runtime.value.max}&`;
-
+        console.log(moviesURL)
         this.setState({moviesURL});
     }
 
