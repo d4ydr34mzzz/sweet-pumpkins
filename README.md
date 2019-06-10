@@ -2,7 +2,7 @@
 
 This project was completed as part of an [online React tutorial](https://sweetpumpkins.codecamps.com) (up to and including "Movies Pagination").
 
-![alt text](https://raw.githubusercontent.com/d4ydr34mzzz/sweet-pumpkins/master/sweet_pumpkins.png)
+![alt text](sweet_pumpkins.png)
 
 Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
