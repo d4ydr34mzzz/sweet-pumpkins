@@ -2,7 +2,7 @@ import React from "react";
 import "./Navigation.css";
 import Selection from "./Selection";
 import Slider from "./Slider";
-import SearchButton from "./SearchButton";
+import Button from "./Button";
 
 class Navigation extends React.Component {
     componentDidMount() {
@@ -20,7 +20,7 @@ class Navigation extends React.Component {
                 <Slider data={this.props.year} onSliderChange={this.props.onSliderChange} />
                 <Slider data={this.props.rating} onSliderChange={this.props.onSliderChange} />
                 <Slider data={this.props.runtime} onSliderChange={this.props.onSliderChange} />
-                <SearchButton onSearchButtonClick={this.props.onSearchButtonClick} />
+                <Button onClick={this.props.onSearchButtonClick}>Search</Button>
             </section>
         );
     }
